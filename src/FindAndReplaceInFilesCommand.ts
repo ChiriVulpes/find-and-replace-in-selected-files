@@ -8,9 +8,14 @@ async function getFilesToInclude (selectedFiles: Uri[]) {
 		if (stat?.type === FileType.Directory)
 			file = Uri.joinPath(file, "**/*");
 
-		const workspaceFolder = workspace.getWorkspaceFolder(file)?.uri.path ?? "/";
-		const filePath = path.relative(workspaceFolder, file.path);
-		return filePath[0] === "." || filePath[0] === "/" || filePath[0] === "\\" ? filePath : `./${filePath}`;
+		const workspaceFolder = workspace.getWorkspaceFolder(file);
+		const isMultiRootWorkspace = (workspace.workspaceFolders?.length ?? 0) > 1;
+		const workspacePrefix = isMultiRootWorkspace && workspaceFolder?.name ? `${workspaceFolder.name}/` : "";
+
+		const workspacePath = workspaceFolder?.uri.path ?? "/";
+		const filePath = path.relative(workspacePath, file.path);
+
+		return `./${workspacePrefix}${filePath}`;
 	}));
 
 	return filesToInclude.join(", ").replace(/\\/g, "/");

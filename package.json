@@ -2,7 +2,7 @@
 	"name": "find-and-replace-in-selected-files",
 	"displayName": "Find and Replace in Selected Files",
 	"description": "A VSCode extension to add commands & context menus for 'find' and 'replace' for the current selection in the explorer tree.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"icon": "image/icon.png",
 	"publisher": "Aarilight",
 	"engines": {
